@@ -6,7 +6,7 @@ import java.util.List;
 //Grupo: 3IM1
 public class Main {
     public static void main(String[] args) {
-        // Repositorio: (https://github.com/crissanzzz07/PP_CFVS_EJE_08)
+        // Repositorio: https://github.com/crissanzzz07/PP_CFVS_EJE_08
 
         List<Integer> numeros = Arrays.asList(12, 45, 7, 88, 23, 64, 51, 3, 90, 36);
         List<String> nombres = Arrays.asList("Ana", "Carlos", "Beatriz", "Luis",
