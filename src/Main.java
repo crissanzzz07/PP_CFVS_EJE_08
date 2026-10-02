@@ -1,10 +1,8 @@
 import java.util.Arrays;
 import java.util.Comparator;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.function.BiPredicate;
 import java.util.function.BinaryOperator;
-import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.function.Supplier;
@@ -28,11 +26,6 @@ public class Main {
         List<String> nombres = proveedorNombres.get();
         List<Double> celsius = proveedorCelsius.get();
 
-        // CONSUMER y BICONSUMER: reciben algo, no regresan nada (para imprimir)
-        Consumer<String> imprimir = texto -> System.out.println(texto);
-        BiConsumer<String, Object> mostrar =
-                (titulo, valor) -> System.out.println(titulo + ": " + valor);
-
         // NIVEL 1
         BinaryOperator<Integer> suma = (a, b) -> a + b;
         Comparator<Integer> comparador = (a, b) -> Integer.compare(a, b);
@@ -41,11 +34,11 @@ public class Main {
         Function<List<Integer>, Integer> minimo = lista -> lista.stream().min(comparador).get();
         Function<List<Integer>, Long> contar = lista -> lista.stream().count();
 
-        imprimir.accept("====== Nivel 1: Operaciones básicas ======");
-        mostrar.accept("1. Suma", sumar.apply(numeros));
-        mostrar.accept("2. Máximo", maximo.apply(numeros));
-        mostrar.accept("3. Mínimo", minimo.apply(numeros));
-        mostrar.accept("4. Cantidad", contar.apply(numeros));
+        System.out.println("====== Nivel 1: Operaciones básicas ======");
+        System.out.println("1. Suma: " + sumar.apply(numeros));
+        System.out.println("2. Máximo: " + maximo.apply(numeros));
+        System.out.println("3. Mínimo: " + minimo.apply(numeros));
+        System.out.println("4. Cantidad: " + contar.apply(numeros));
 
         // NIVEL 2
         Predicate<Integer> esPar = n -> n % 2 == 0;
@@ -53,35 +46,35 @@ public class Main {
         Predicate<Integer> esPositivo = n -> n > 0;
         BiPredicate<Integer, Integer> enRango = (n, limite) -> n >= 10 && n <= limite;
 
-        imprimir.accept("\n====== Nivel 2: filter ======");
-        mostrar.accept("5. Pares", numeros.stream().filter(esPar).toList());
-        mostrar.accept("6. Mayores que 50", numeros.stream().filter(mayorQue50).toList());
-        mostrar.accept("7. Positivos", numeros.stream().filter(esPositivo).count());
-        mostrar.accept("8. Entre 10 y 60", numeros.stream().filter(n -> enRango.test(n, 60)).toList());
+        System.out.println("\n====== Nivel 2: filter ======");
+        System.out.println("5. Pares: " + numeros.stream().filter(esPar).toList());
+        System.out.println("6. Mayores que 50: " + numeros.stream().filter(mayorQue50).toList());
+        System.out.println("7. Positivos: " + numeros.stream().filter(esPositivo).count());
+        System.out.println("8. Entre 10 y 60: " + numeros.stream().filter(n -> enRango.test(n, 60)).toList());
 
         // NIVEL 3
         Function<Integer, Integer> alCuadrado = n -> n * n;
         Function<Integer, Integer> porDiez = n -> n * 10;
         Function<Double, Double> aFahrenheit = c -> c * 9 / 5 + 32;
 
-        imprimir.accept("\n====== Nivel 3: map ======");
-        mostrar.accept("9. Al cuadrado", numeros.stream().map(alCuadrado).toList());
-        mostrar.accept("10. Por 10", numeros.stream().map(porDiez).toList());
-        mostrar.accept("11. Fahrenheit", celsius.stream().map(aFahrenheit).toList());
+        System.out.println("\n====== Nivel 3: map ======");
+        System.out.println("9. Al cuadrado: " + numeros.stream().map(alCuadrado).toList());
+        System.out.println("10. Por 10: " + numeros.stream().map(porDiez).toList());
+        System.out.println("11. Fahrenheit: " + celsius.stream().map(aFahrenheit).toList());
 
         // NIVEL 4
-        imprimir.accept("\n====== Nivel 4: Combinar operaciones ======");
-        mostrar.accept("12. Pares al cuadrado", numeros.stream().filter(esPar).map(alCuadrado).toList());
-        mostrar.accept("13. Suma de pares", numeros.stream().filter(esPar).reduce(0, suma));
-        mostrar.accept("14. Promedio de mayores que 50",
-                numeros.stream().filter(mayorQue50).mapToInt(Integer::intValue).average().orElse(0));
-        mostrar.accept("15. Máximo de pares", numeros.stream().filter(esPar).max(comparador).get());
+        System.out.println("\n====== Nivel 4: Combinar operaciones ======");
+        System.out.println("12. Pares al cuadrado: " + numeros.stream().filter(esPar).map(alCuadrado).toList());
+        System.out.println("13. Suma de pares: " + numeros.stream().filter(esPar).reduce(0, suma));
+        System.out.println("14. Promedio de mayores que 50: "
+                + numeros.stream().filter(mayorQue50).mapToInt(Integer::intValue).average().orElse(0));
+        System.out.println("15. Máximo de pares: " + numeros.stream().filter(esPar).max(comparador).get());
 
         // NIVEL 5
-        imprimir.accept("\n====== Nivel 5: Ordenamiento ======");
-        mostrar.accept("16. Menor a mayor", numeros.stream().sorted(comparador).toList());
-        mostrar.accept("17. Mayor a menor", numeros.stream().sorted(comparador.reversed()).toList());
-        mostrar.accept("18. Tres más grandes", numeros.stream().sorted(comparador.reversed()).limit(3).toList());
+        System.out.println("\n====== Nivel 5: Ordenamiento ======");
+        System.out.println("16. Menor a mayor: " + numeros.stream().sorted(comparador).toList());
+        System.out.println("17. Mayor a menor: " + numeros.stream().sorted(comparador.reversed()).toList());
+        System.out.println("18. Tres más grandes: " + numeros.stream().sorted(comparador.reversed()).limit(3).toList());
 
         // NIVEL 6
         Predicate<String> empiezaConA = s -> s.startsWith("A");
@@ -89,19 +82,19 @@ public class Main {
         Function<String, String> aMayusculas = s -> s.toUpperCase();
         Comparator<String> porAlfabeto = (a, b) -> a.compareTo(b);
 
-        imprimir.accept("\n====== Nivel 6: Strings ======");
-        mostrar.accept("19. Empiezan con A", nombres.stream().filter(empiezaConA).toList());
-        mostrar.accept("20. Más de 5 caracteres", nombres.stream().filter(masDe5).toList());
-        mostrar.accept("21. Mayúsculas", nombres.stream().map(aMayusculas).toList());
-        mostrar.accept("22. Ordenados", nombres.stream().sorted(porAlfabeto).toList());
+        System.out.println("\n====== Nivel 6: Strings ======");
+        System.out.println("19. Empiezan con A: " + nombres.stream().filter(empiezaConA).toList());
+        System.out.println("20. Más de 5 caracteres: " + nombres.stream().filter(masDe5).toList());
+        System.out.println("21. Mayúsculas: " + nombres.stream().map(aMayusculas).toList());
+        System.out.println("22. Ordenados: " + nombres.stream().sorted(porAlfabeto).toList());
 
         // NIVEL 7
         BiPredicate<Integer, Integer> esIgual = (n, buscado) -> n.equals(buscado);
         Predicate<Integer> mayorQue80 = n -> n > 80;
 
-        imprimir.accept("\n====== Nivel 7: Búsqueda y condiciones ======");
-        mostrar.accept("23. Buscar el 45", numeros.stream().filter(n -> esIgual.test(n, 45)).findFirst().isPresent());
-        mostrar.accept("24. ¿Todos positivos?", numeros.stream().allMatch(esPositivo));
-        mostrar.accept("25. ¿Alguno mayor que 80?", numeros.stream().anyMatch(mayorQue80));
+        System.out.println("\n====== Nivel 7: Búsqueda y condiciones ======");
+        System.out.println("23. Buscar el 45: " + numeros.stream().filter(n -> esIgual.test(n, 45)).findFirst().isPresent());
+        System.out.println("24. ¿Todos positivos?: " + numeros.stream().allMatch(esPositivo));
+        System.out.println("25. ¿Alguno mayor que 80?: " + numeros.stream().anyMatch(mayorQue80));
     }
 }
